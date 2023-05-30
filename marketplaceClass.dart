@@ -93,14 +93,13 @@ abstract class FormatProducts {
   String get prettyFormat;
 }
 
-class Product implements FormatStaff {
+class Product {
   final String category;
   final double price;
   final double count;
 
   Product(this.price, this.count, this.category);
 
-  @override
   // TODO: implement prettyFormat
   String get prettyFormat =>
       "Category: $category; price: $price; count: $count";
