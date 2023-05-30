@@ -12,10 +12,9 @@ void main() {
 }
 
 void staffMethod(Marketplace marketplace) {
-  marketplace.staffs.add(Staff("Vasia", "Pupkin", jobTitle.cook.name, 50000));
-  marketplace.staffs.add(Staff("Ivan", "Ivanov", jobTitle.admin.name, 40000));
-  marketplace.staffs
-      .add(Staff("Petya", "Petrov", jobTitle.cashier.name, 30000));
+  marketplace.staffs.add(Staff("Ivan", "Ivanov", JobTitle.admin, 40000));
+  marketplace.staffs.add(Staff("Petya", "Petrov", JobTitle.cashier, 30000));
+  marketplace.staffs.add(Staff("Vova", "Sidorov", JobTitle.cook, 35000));
 }
 
 void productsMethod(Marketplace marketplace) {
@@ -24,7 +23,7 @@ void productsMethod(Marketplace marketplace) {
   marketplace.products.add(Product(5, 1, "bubble"));
 }
 
-enum jobTitle { cook, admin, cashier }
+enum JobTitle { cook, admin, cashier }
 
 extension _Marketplace on Marketplace {
   void showStaff() {
@@ -46,7 +45,7 @@ abstract class HasOwner {
 
 class Marketplace extends HasOwner {
   final String nameMarketplace;
-  final proceeds;
+  final int proceeds;
   final String nameOwner;
   final int salaryOwner;
   final List<Staff> staffs;
@@ -69,26 +68,26 @@ abstract class FormatStaff {
   String get prettyFormat;
 }
 
-class Staff implements FormatStaff {
+class Staff {
   final String name;
   final String firstName;
-  num salary;
+  final num salary;
   //как избавиться от зависимости этой стринги
-  String jobTitle;
+  JobTitle jobTitle;
+
   final taxStaff = Tax(13);
 
   @override
   String toString() {
-    return 'Staff{name: $name, firstName: $firstName, salary: $salary, jobTitle: $jobTitle, taxStaff: ${taxStaff.taxLikeString}}';
+    return 'Staff{name: $name, firstName: $firstName, salary: $salary, jobTitle: ${jobTitle.name}, taxStaff: ${taxStaff.taxLikeString}}';
   }
 
   Staff(this.name, this.firstName, this.jobTitle, this.salary);
 
   double get salaryFreeTax => taxStaff.applyIncome(salary);
 
-  @override
   String get prettyFormat =>
-      "Full name: $name $firstName; job: $jobTitle; salary: $salary";
+      "Full name: $name $firstName; job: ${jobTitle.name}; salary: $salary";
 }
 
 abstract class FormatProducts {
@@ -98,7 +97,7 @@ abstract class FormatProducts {
 class Product implements FormatStaff {
   final String category;
   final double price;
-  final count;
+  final double count;
 
   Product(this.price, this.count, this.category);
 
@@ -109,7 +108,7 @@ class Product implements FormatStaff {
 }
 
 class Tax {
-  int tax;
+  final int tax;
   Tax(this.tax);
 
   double taxes(int income) {
