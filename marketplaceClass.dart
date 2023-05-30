@@ -72,7 +72,6 @@ class Staff {
   final String name;
   final String firstName;
   final num salary;
-  //как избавиться от зависимости этой стринги
   JobTitle jobTitle;
 
   final taxStaff = Tax(13);
