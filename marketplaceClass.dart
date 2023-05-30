@@ -34,7 +34,7 @@ extension _Marketplace on Marketplace {
 
   void showProducts() {
     for (Product products in products) {
-      print(products.prettyFormat);
+      print(products.productsFormat);
     }
   }
 }
@@ -68,7 +68,7 @@ abstract class FormatStaff {
   String get prettyFormat;
 }
 
-class Staff {
+class Staff implements FormatStaff {
   final String name;
   final String firstName;
   final num salary;
@@ -90,18 +90,18 @@ class Staff {
 }
 
 abstract class FormatProducts {
-  String get prettyFormat;
+  String get productsFormat;
 }
 
-class Product {
+class Product implements FormatProducts {
   final String category;
   final double price;
   final double count;
 
   Product(this.price, this.count, this.category);
 
-  // TODO: implement prettyFormat
-  String get prettyFormat =>
+  @override
+  String get productsFormat =>
       "Category: $category; price: $price; count: $count";
 }
 
