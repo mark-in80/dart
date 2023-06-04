@@ -1,20 +1,25 @@
+import 'dart:io';
+
 void main() {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  marketplace.nameMarket();
-  marketplace.infoOwner();
-  print("\n");
-  staffMethod(marketplace);
-  marketplace.showStaff();
-  print("\n");
-  productsMethod(marketplace);
+  // marketplace.nameMarket();
+  // marketplace.infoOwner();
+  // print("\n");
+  // staffMethod(marketplace);
+  // marketplace.showStaff();
+  // print("\n");
+  //productsMethod(marketplace);
+  //marketplace.showProducts();
+  Product product = Product(0, 0, "_category");
+  product.productsList(marketplace);
   marketplace.showProducts();
 }
 
 void staffMethod(Marketplace marketplace) {
-  marketplace.staffs.add(Staff("Ivan", "Ivanov", JobTitle.admin, 40000));
-  marketplace.staffs.add(Staff("Petya", "Petrov", JobTitle.cashier, 30000));
-  marketplace.staffs.add(Staff("Vova", "Sidorov", JobTitle.cook, 35000));
+  marketplace.staffs.add(Staff("Ivan", "Ivanov", _JobTitle.admin, 40000));
+  marketplace.staffs.add(Staff("Petya", "Petrov", _JobTitle.cashier, 30000));
+  marketplace.staffs.add(Staff("Vova", "Sidorov", _JobTitle.cook, 35000));
 }
 
 void productsMethod(Marketplace marketplace) {
@@ -23,7 +28,7 @@ void productsMethod(Marketplace marketplace) {
   marketplace.products.add(Product(5, 1, "bubble"));
 }
 
-enum JobTitle { cook, admin, cashier }
+enum _JobTitle { cook, admin, cashier }
 
 extension _Marketplace on Marketplace {
   void showStaff() {
@@ -69,24 +74,24 @@ abstract class FormatStaff {
 }
 
 class Staff implements FormatStaff {
-  final String name;
-  final String firstName;
-  final num salary;
-  JobTitle jobTitle;
+  final String _name;
+  final String _firstName;
+  final num _salary;
+  _JobTitle _jobTitle;
 
   final taxStaff = Tax(13);
 
   @override
   String toString() {
-    return 'Staff{name: $name, firstName: $firstName, salary: $salary, jobTitle: ${jobTitle.name}, taxStaff: ${taxStaff.taxLikeString}}';
+    return 'Staff{name: $_name, firstName: $_firstName, salary: $_salary, jobTitle: ${_jobTitle.name}, taxStaff: ${taxStaff.taxLikeString}}';
   }
 
-  Staff(this.name, this.firstName, this.jobTitle, this.salary);
+  Staff(this._name, this._firstName, this._jobTitle, this._salary);
 
-  double get salaryFreeTax => taxStaff.applyIncome(salary);
+  double get salaryFreeTax => taxStaff.applyIncome(_salary);
 
   String get prettyFormat =>
-      "Full name: $name $firstName; job: ${jobTitle.name}; salary: $salary";
+      "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
 }
 
 abstract class FormatProducts {
@@ -94,15 +99,39 @@ abstract class FormatProducts {
 }
 
 class Product implements FormatProducts {
-  final String category;
-  final double price;
-  final double count;
+  final String _category;
+  final double _price;
+  final double _count;
 
-  Product(this.price, this.count, this.category);
+  Product(this._price, this._count, this._category);
 
   @override
   String get productsFormat =>
-      "Category: $category; price: $price; count: $count";
+      "Category: $_category; price: $_price; count: $_count";
+
+  void productsList(Marketplace marketplace) {
+    var abstractVariable = " ";
+    List<String> list = [];
+
+    while (abstractVariable != "break") {
+      stdout
+          .write("Enter products, price, category and Enter break for stop: ");
+      try {
+        String? inputUser = stdin.readLineSync();
+        if (inputUser != 'break') {
+          list.add(inputUser!);
+          marketplace.products.add(inputUser as Product);
+          print(list);
+        }
+        if (inputUser == 'break') {
+          list.add(inputUser!);
+          break;
+        }
+      } catch (exception) {
+        print(exception);
+      }
+    }
+  }
 }
 
 class Tax {
