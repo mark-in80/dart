@@ -12,6 +12,7 @@ void staffMethod(Marketplace marketplace) {
   marketplace.staffs.add(Staff("Ivan", "Ivanov", _JobTitle.admin, 40000));
   marketplace.staffs.add(Staff("Petya", "Petrov", _JobTitle.cashier, 30000));
   marketplace.staffs.add(Staff("Vova", "Sidorov", _JobTitle.cook, 35000));
+
 }
 
 void productsMethod(Marketplace marketplace) {
