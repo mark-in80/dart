@@ -3,16 +3,8 @@ import 'dart:io';
 void main() {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  // marketplace.nameMarket();
-  // marketplace.infoOwner();
-  // print("\n");
-  // staffMethod(marketplace);
-  // marketplace.showStaff();
-  // print("\n");
-  //productsMethod(marketplace);
-  //marketplace.showProducts();
   Product product = Product(0, 0, "_category");
-  product.productsList(marketplace);
+  product.addNewProduct(marketplace);
   marketplace.showProducts();
 }
 
@@ -92,40 +84,48 @@ class Staff implements FormatStaff {
 
   String get prettyFormat =>
       "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
+
+  void hireNewStaff(){}
+
 }
 
 abstract class FormatProducts {
   String get productsFormat;
 }
 
-class Product implements FormatProducts {
-  final String _category;
-  final double _price;
-  final double _count;
+class Product<T> implements FormatProducts {
+  final T _nameProduct;
+  final T _price;
+  final T _count;
 
-  Product(this._price, this._count, this._category);
+  Product(this._price, this._count, this._nameProduct);
 
   @override
   String get productsFormat =>
-      "Category: $_category; price: $_price; count: $_count";
+      "Category: $_nameProduct; price: $_price; count: $_count";
 
-  void productsList(Marketplace marketplace) {
+  void addNewProduct(Marketplace marketplace) {
     var abstractVariable = " ";
-    List<String> list = [];
 
     while (abstractVariable != "break") {
-      stdout
-          .write("Enter products, price, category and Enter break for stop: ");
+      stdout.write("Enter  Name products,  or Enter break for stop: ");
       try {
-        String? inputUser = stdin.readLineSync();
-        if (inputUser != 'break') {
-          list.add(inputUser!);
-          marketplace.products.add(inputUser as Product);
-          print(list);
-        }
-        if (inputUser == 'break') {
-          list.add(inputUser!);
+        T nameProduct = stdin.readLineSync() as T;
+        if (nameProduct == "break") {
           break;
+        }
+        stdout.write("Enter  Price,  or Enter break for stop: ");
+        T priceProduct = stdin.readLineSync() as T;
+        if (priceProduct == "break") {
+          break;
+        }
+        stdout.write("Enter  Count,  or Enter break for stop: ");
+        T countProduct = stdin.readLineSync() as T;
+        if (countProduct == "break") {
+          break;
+        } else {
+          marketplace.products
+              .add(Product(priceProduct, countProduct, nameProduct));
         }
       } catch (exception) {
         print(exception);
