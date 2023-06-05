@@ -85,8 +85,7 @@ class Staff implements FormatStaff {
   String get prettyFormat =>
       "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
 
-  void hireNewStaff(){}
-
+  void hireNewStaff() {}
 }
 
 abstract class FormatProducts {
