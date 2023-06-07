@@ -27,17 +27,17 @@ void addNewProduct(Marketplace marketplace) {
   while (abstractVariable != "break") {
     stdout.write("Enter  Name products,  or Enter break for stop: ");
     try {
-      String nameProduct = stdin.readLineSync() ?? '0';
+      final String nameProduct = stdin.readLineSync() ?? '0';
       if (nameProduct == "break") {
         break;
       }
       stdout.write("Enter  Price,  or Enter break for stop: ");
-      double priceProduct = double.parse(stdin.readLineSync() ?? '0');
+      final double priceProduct = double.parse(stdin.readLineSync() ?? '0');
       if (priceProduct == "break") {
         break;
       }
       stdout.write("Enter  Count,  or Enter break for stop: ");
-      double countProduct = double.parse(stdin.readLineSync() ?? '0');
+      final double countProduct = double.parse(stdin.readLineSync() ?? '0');
       if (countProduct == "break") {
         break;
       } else {
@@ -122,7 +122,7 @@ abstract class FormatProducts {
   String get productsFormat;
 }
 
-class Product<T> implements FormatProducts {
+class Product implements FormatProducts {
   final String _nameProduct;
   final double _price;
   final double _count;
