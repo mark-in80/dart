@@ -3,7 +3,6 @@ import 'dart:io';
 void main() {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  Product product = Product(0, 0, "_category");
   productsMethod(marketplace);
   addNewProduct(marketplace);
   marketplace.showProducts();
