@@ -6,6 +6,7 @@ void main() {
   productsMethod(marketplace);
   addNewProduct(marketplace);
   marketplace.showProducts();
+
 }
 
 void staffMethod(Marketplace marketplace) {
