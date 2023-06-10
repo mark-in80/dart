@@ -3,28 +3,25 @@ import 'dart:io';
 void main() {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  productsMethod(marketplace);
+  productsCreateInfo(marketplace);
   addNewProduct(marketplace);
   marketplace.showProducts();
-
 }
 
-void staffMethod(Marketplace marketplace) {
+void staffCreateInfo(Marketplace marketplace) {
   marketplace.staffs.add(Staff("Ivan", "Ivanov", _JobTitle.admin, 40000));
   marketplace.staffs.add(Staff("Petya", "Petrov", _JobTitle.cashier, 30000));
   marketplace.staffs.add(Staff("Vova", "Sidorov", _JobTitle.cook, 35000));
 }
 
-void productsMethod(Marketplace marketplace) {
+void productsCreateInfo(Marketplace marketplace) {
   marketplace.products.add(Product(150, 0.1, "candy"));
   marketplace.products.add(Product(10, 1, "bread"));
   marketplace.products.add(Product(5, 1, "bubble"));
 }
 
 void addNewProduct(Marketplace marketplace) {
-  var abstractVariable = " ";
-
-  while (abstractVariable != "break") {
+  while (true) {
     stdout.write("Enter  Name products,  or Enter break for stop: ");
     try {
       final String nameProduct = stdin.readLineSync() ?? '0';
@@ -32,15 +29,17 @@ void addNewProduct(Marketplace marketplace) {
         break;
       }
       stdout.write("Enter  Price,  or Enter break for stop: ");
-      final double priceProduct = double.parse(stdin.readLineSync() ?? '0');
-      if (priceProduct == "break") {
+      String checkPriceProduct = stdin.readLineSync() ?? '0';
+      if (checkPriceProduct == "break") {
         break;
       }
+      double priceProduct = double.parse(checkPriceProduct);
       stdout.write("Enter  Count,  or Enter break for stop: ");
-      final double countProduct = double.parse(stdin.readLineSync() ?? '0');
-      if (countProduct == "break") {
+      String checkCountProduct = stdin.readLineSync() ?? '0';
+      if (checkCountProduct == "break") {
         break;
       } else {
+        double countProduct = double.parse(checkCountProduct);
         marketplace.products
             .add(Product(priceProduct, countProduct, nameProduct));
       }
