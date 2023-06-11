@@ -6,6 +6,7 @@ void main() {
   productsCreateInfo(marketplace);
   addNewProduct(marketplace);
   marketplace.showProducts();
+  marketplace.save();
 }
 
 void staffCreateInfo(Marketplace marketplace) {
@@ -63,6 +64,13 @@ extension _Marketplace on Marketplace {
       print(products.productsFormat);
     }
   }
+
+  writeProductsFile() {
+    for (Product products in products) {
+      var listProductFile = products.productsFormat;
+      return listProductFile;
+    }
+  }
 }
 
 abstract class HasOwner {
@@ -75,7 +83,7 @@ class Marketplace extends HasOwner {
   final String nameOwner;
   final int salaryOwner;
   final List<Staff> staffs;
-  final List<Product> products;
+  late final List<Product> products;
 
   Marketplace(this.nameMarketplace, this.proceeds, this.nameOwner,
       this.salaryOwner, this.staffs, this.products);
@@ -87,6 +95,12 @@ class Marketplace extends HasOwner {
   void infoOwner() {
     print(
         "Owner marketplace is $nameOwner, his salary is $salaryOwner parrots");
+  }
+
+  void save() async {
+    final String listProduct = 'listProducts.txt';
+    var fileProduct =
+        await File(listProduct).writeAsString(writeProductsFile());
   }
 }
 
@@ -114,7 +128,8 @@ class Staff implements FormatStaff {
   String get prettyFormat =>
       "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
 
-  void hireNewStaff() {}
+  String get prettyFormatFile =>
+      "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
 }
 
 abstract class FormatProducts {
