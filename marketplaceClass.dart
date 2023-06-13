@@ -65,11 +65,12 @@ extension _Marketplace on Marketplace {
     }
   }
 
-  writeProductsFile() {
+  String writeProductsFile() {
+    var listProductFile = "";
     for (Product products in products) {
-      var listProductFile = products.productsFormat;
-      return listProductFile;
+      listProductFile = products.productsFormat + "\n" + listProductFile;
     }
+    return listProductFile;
   }
 }
 
