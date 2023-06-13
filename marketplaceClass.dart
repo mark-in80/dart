@@ -99,9 +99,8 @@ class Marketplace extends HasOwner {
   }
 
   void save() async {
-    final String listProduct = 'listProducts.txt';
-    var fileProduct =
-        await File(listProduct).writeAsString(writeProductsFile());
+    final File fileProducts = File('listProducts.txt');
+    await fileProducts.writeAsString(writeProductsFile());
   }
 }
 
