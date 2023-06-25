@@ -1,12 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
-void main() {
+Future<void> main() async {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
   productsCreateInfo(marketplace);
-  addNewProduct(marketplace);
-  marketplace.showProducts();
-  marketplace.save();
+  staffCreateInfo(marketplace);
+  //addNewProduct(marketplace);
+  await marketplace.saveProducts();
+  marketplace.saveStaff();
 }
 
 void staffCreateInfo(Marketplace marketplace) {
@@ -72,6 +74,14 @@ extension _Marketplace on Marketplace {
     }
     return listProductFile;
   }
+
+  String writeStaffFile() {
+    var listStaffFile = "";
+    for (Staff staff in staffs) {
+      listStaffFile = staff.prettyFormat + "\n" + listStaffFile;
+    }
+    return listStaffFile;
+  }
 }
 
 abstract class HasOwner {
@@ -84,7 +94,7 @@ class Marketplace extends HasOwner {
   final String nameOwner;
   final int salaryOwner;
   final List<Staff> staffs;
-  late final List<Product> products;
+  final List<Product> products;
 
   Marketplace(this.nameMarketplace, this.proceeds, this.nameOwner,
       this.salaryOwner, this.staffs, this.products);
@@ -98,9 +108,14 @@ class Marketplace extends HasOwner {
         "Owner marketplace is $nameOwner, his salary is $salaryOwner parrots");
   }
 
-  void save() async {
+  Future<void> saveProducts() async {
     final File fileProducts = File('listProducts.txt');
     await fileProducts.writeAsString(writeProductsFile());
+  }
+
+  Future<void> saveStaff() async {
+    final File fileStaff = File('listStaff.txt');
+    await fileStaff.writeAsString(writeStaffFile());
   }
 }
 
@@ -126,9 +141,6 @@ class Staff implements FormatStaff {
   double get salaryFreeTax => taxStaff.applyIncome(_salary);
 
   String get prettyFormat =>
-      "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
-
-  String get prettyFormatFile =>
       "Full name: $_name $_firstName; job: ${_jobTitle.name}; salary: $_salary";
 }
 
