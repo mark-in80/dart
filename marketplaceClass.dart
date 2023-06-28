@@ -1,14 +1,22 @@
 import 'dart:convert';
 import 'dart:io';
 
+
+
+
+
 Future<void> main() async {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  productsCreateInfo(marketplace);
-  staffCreateInfo(marketplace);
+  // productsCreateInfo(marketplace);
+  // staffCreateInfo(marketplace);
   //addNewProduct(marketplace);
-  await marketplace.saveProducts();
-  marketplace.saveStaff();
+  //await marketplace.saveProducts();
+  //marketplace.saveStaff();
+
+  await marketplace.saveStaff();
+
+  addNewStaff(marketplace);
 }
 
 void staffCreateInfo(Marketplace marketplace) {
@@ -31,12 +39,14 @@ void addNewProduct(Marketplace marketplace) {
       if (nameProduct == "break") {
         break;
       }
+
       stdout.write("Enter  Price,  or Enter break for stop: ");
       String checkPriceProduct = stdin.readLineSync() ?? '0';
       if (checkPriceProduct == "break") {
         break;
       }
       double priceProduct = double.parse(checkPriceProduct);
+
       stdout.write("Enter  Count,  or Enter break for stop: ");
       String checkCountProduct = stdin.readLineSync() ?? '0';
       if (checkCountProduct == "break") {
@@ -51,6 +61,49 @@ void addNewProduct(Marketplace marketplace) {
     }
   }
 }
+
+void addNewStaff(Marketplace marketplace) {
+  while (true) {
+    stdout.write("Enter  Name ,  or Enter break for stop: ");
+    try {
+      final String name = stdin.readLineSync() ?? '0';
+      if (name == "break") {
+        break;
+      }
+
+      stdout.write("Enter  First Name staff,  or Enter break for stop: ");
+      String firstName = stdin.readLineSync() ?? '0';
+      if (firstName == "break") {
+        break;
+      }
+
+      stdout.write("Enter  job staff,  or Enter break for stop: ");
+      dynamic jobTitle = stdin.readLineSync() ?? '0';
+      if (jobTitle == "break"){
+        break;
+      }
+
+      //var enumJobtitle = jobTitle.
+
+
+      stdout.write("Enter  salary,  or Enter break for stop: ");
+      String checkSalaryStaff = stdin.readLineSync() ?? '0';
+      if (checkSalaryStaff == "break"){
+        break;
+      }
+      num salaryStaff = double.parse(checkSalaryStaff);
+
+      //marketplace.staffs.add(Staff(name, firstName, convert, salaryStaff));
+
+    } catch (exception) {
+      print(exception);
+    }
+  }
+}
+
+
+
+
 
 enum _JobTitle { cook, admin, cashier }
 
