@@ -1,22 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-
-
-
-
 Future<void> main() async {
   Marketplace marketplace =
       Marketplace("Prosrochka", 10000, "Uncle Vasia", 100500, [], []);
-  // productsCreateInfo(marketplace);
-  // staffCreateInfo(marketplace);
-  //addNewProduct(marketplace);
-  //await marketplace.saveProducts();
-  //marketplace.saveStaff();
+  productsCreateInfo(marketplace);
 
   await marketplace.saveStaff();
 
-  addNewStaff(marketplace);
+  marketplace.saveProductJson();
 }
 
 void staffCreateInfo(Marketplace marketplace) {
@@ -79,31 +71,30 @@ void addNewStaff(Marketplace marketplace) {
 
       stdout.write("Enter  job staff,  or Enter break for stop: ");
       dynamic jobTitle = stdin.readLineSync() ?? '0';
-      if (jobTitle == "break"){
+      if (jobTitle == "break") {
         break;
       }
 
-      //var enumJobtitle = jobTitle.
-
+      var enumJobTitle = stringToEnum(jobTitle);
 
       stdout.write("Enter  salary,  or Enter break for stop: ");
       String checkSalaryStaff = stdin.readLineSync() ?? '0';
-      if (checkSalaryStaff == "break"){
+      if (checkSalaryStaff == "break") {
         break;
       }
       num salaryStaff = double.parse(checkSalaryStaff);
 
-      //marketplace.staffs.add(Staff(name, firstName, convert, salaryStaff));
-
+      marketplace.staffs.add(Staff(name, firstName, enumJobTitle, salaryStaff));
     } catch (exception) {
       print(exception);
     }
   }
 }
 
-
-
-
+_JobTitle stringToEnum(String jobTitle) {
+  return _JobTitle.values
+      .firstWhere((element) => element.name == jobTitle, orElse: null);
+}
 
 enum _JobTitle { cook, admin, cashier }
 
@@ -134,6 +125,14 @@ extension _Marketplace on Marketplace {
       listStaffFile = staff.prettyFormat + "\n" + listStaffFile;
     }
     return listStaffFile;
+  }
+
+  String writeProductsFileJson() {
+    var listProductFilJson = "";
+    for (Product products in products) {
+      listProductFilJson = products.productsFormat + " " + listProductFilJson;
+    }
+    return listProductFilJson;
   }
 }
 
@@ -169,6 +168,12 @@ class Marketplace extends HasOwner {
   Future<void> saveStaff() async {
     final File fileStaff = File('listStaff.txt');
     await fileStaff.writeAsString(writeStaffFile());
+  }
+
+  Future<void> saveProductJson() async {
+    var encoded = json.encode(writeProductsFileJson());
+    final File fileProductsJson = File('listProductsJSON.json');
+    await fileProductsJson.writeAsString(encoded);
   }
 }
 
